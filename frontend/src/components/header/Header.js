@@ -24,34 +24,11 @@ import { GoSignIn } from "react-icons/go";
 import MenuItems from "./MenuItems";
 
 const Header = () => {
-  //   const dispatch = useDispatch();
-  //   let navigate = useNavigate();
-
   const [show, setShow] = useState(false);
 
-  //   const userLogin = useSelector((state) => state.userLogin);
-  //   const { userInfo } = userLogin;
+  const logoutHandler = () => {};
 
-  //   const userDetails = useSelector((state) => state.userDetails);
-
-  //   const { user } = userDetails;
-
-  //   if (user.name) {
-  //     userInfo.name = user.name;
-  //   }
-
-  const logoutHandler = () => {
-    // dispatch(logout());
-    // dispatch({ type: USER_DETAILS_RESET });
-    // dispatch({ type: USER_REGISTER_RESET });
-    // dispatch({ type: PRODUCT_DETAILS_RESET });
-    // navigate("/login");
-  };
-
-  const handleClick = () => {
-    // dispatch({ type: PRODUCT_DETAILS_RESET });
-    // console.log("working");
-  };
+  const handleClick = () => {};
 
   return (
     <Flex
@@ -134,35 +111,6 @@ const Header = () => {
         )}
 
         {/* Admin Menu */}
-
-        {
-          // userInfo && userInfo.isAdmin &&
-          false && (
-            <Menu>
-              <MenuButton
-                ml="5"
-                color="gray.800"
-                fontWeight="semibold"
-                as={Button}
-                textTransform="uppercase"
-                _hover={{ textDecor: "none", opacity: "0.7" }}
-              >
-                Manage <Icon as={IoChevronDown} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem as={RouterLink} to="/admin/userlist">
-                  All Users
-                </MenuItem>
-                <MenuItem as={RouterLink} to="/admin/productlist">
-                  All Products
-                </MenuItem>
-                <MenuItem as={RouterLink} to="/admin/orderlist">
-                  All Orders
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          )
-        }
       </Box>
     </Flex>
   );
