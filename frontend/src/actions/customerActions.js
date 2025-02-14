@@ -12,6 +12,7 @@ import {
   CUSTOMER_UPDATE_REQUEST,
   CUSTOMER_UPDATE_SUCCESS,
   CUSTOMER_UPDATE_FAIL,
+  CUSTOMER_LIST_COUNT_SUCCESS,
 } from "../constants/customerConstants";
 import axios from "axios";
 
@@ -30,7 +31,16 @@ export const listCustomers = () => async (dispatch, getState) => {
 
     const { data } = await axios.get("/api/kyc", config);
 
-    dispatch({ type: CUSTOMER_LIST_SUCCESS, payload: data });
+    dispatch({ type: CUSTOMER_LIST_SUCCESS, payload: data?.userKycList });
+    dispatch({
+      type: CUSTOMER_LIST_COUNT_SUCCESS,
+      payload: [
+        data?.totalCount,
+        data?.approvedCount,
+        data?.rejectedCount,
+        data?.pendingCount,
+      ],
+    });
   } catch (err) {
     dispatch({
       type: CUSTOMER_LIST_FAIL,

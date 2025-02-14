@@ -9,6 +9,7 @@ import {
 import {
   createCustomerReducer,
   customerDetailReducer,
+  customerListCountReducer,
   customerListReducer,
   customerUpdateReducer,
 } from "./reducers/customerReducers";
@@ -21,6 +22,7 @@ const reducer = combineReducers({
   customerCreate: createCustomerReducer,
   customerDetail: customerDetailReducer,
   customerUpdate: customerUpdateReducer,
+  customerListCount: customerListCountReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

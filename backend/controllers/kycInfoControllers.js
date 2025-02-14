@@ -8,8 +8,26 @@ import mongoose from "mongoose";
 // @access  public
 export const getAllUserKyc = asyncHandler(async (req, res) => {
   const userKycList = await UserKyc.find({});
+  const totalCount = userKycList.length;
+  const pendingCount = userKycList.filter(
+    (user) => user.kycStatus === "Pending"
+  ).length;
+  const rejectedCount = userKycList.filter(
+    (user) => user.kycStatus === "Reject"
+  ).length;
+  const approvedCount = userKycList.filter(
+    (user) => user.kycStatus === "Approve"
+  ).length;
 
-  res.json(userKycList);
+  const userList = {
+    userKycList,
+    totalCount,
+    pendingCount,
+    rejectedCount,
+    approvedCount,
+  };
+
+  res.json(userList);
 });
 
 // @desc    Add a customer detail

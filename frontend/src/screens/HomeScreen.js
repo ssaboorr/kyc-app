@@ -22,6 +22,7 @@ import {
 import { IoPencilSharp, IoTrashBinSharp, IoAdd } from "react-icons/io5";
 import { getCustomerDetails, listCustomers } from "../actions/customerActions";
 import CustomerTable from "../components/CustomerTable";
+import KpiCards from "../components/KpiCards";
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -30,7 +31,10 @@ function HomeScreen() {
   const customerDetails = useSelector((state) => state.customerDetail);
   const { customerDetail } = customerDetails;
 
-  console.log("Customer details in home", customerDetail);
+  const customerListCount = useSelector((state) => state.customerListCount);
+  const { counts } = customerListCount;
+
+  console.log("Customer details in home", counts);
 
   const customerList = useSelector((state) => state.customerList);
   const { loading, customers, error } = customerList;
@@ -52,7 +56,24 @@ function HomeScreen() {
       ) : error ? (
         <Message type="error">{error}</Message>
       ) : customers?.length ? (
-        <Flex w="100%" alignItems="flex-start" justifyContent="center" py="5">
+        <Flex
+          w="100%"
+          alignItems="center"
+          justifyContent="flex-start"
+          py="5"
+          flexDirection={"column"}
+          gap={10}
+        >
+          <Flex
+            w="100%"
+            alignItems="center"
+            justifyContent="center"
+            py="5"
+            flexDirection={"row"}
+            gap={10}
+          >
+            <KpiCards data={counts} />
+          </Flex>
           <CustomerTable data={customers} isList={true} />
         </Flex>
       ) : customerDetail?._id ? (

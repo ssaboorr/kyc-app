@@ -18,6 +18,8 @@ import {
   CUSTOMER_UPDATE_REQUEST,
   CUSTOMER_UPDATE_RESET,
   CUSTOMER_UPDATE_SUCCESS,
+  CUSTOMER_LIST_COUNT_SUCCESS,
+  CUSTOMER_LIST_COUNT_RESET,
 } from "../constants/customerConstants";
 
 export const customerListReducer = (state = { customers: [] }, action) => {
@@ -34,7 +36,16 @@ export const customerListReducer = (state = { customers: [] }, action) => {
       return state;
   }
 };
-
+export const customerListCountReducer = (state = { counts: [] }, action) => {
+  switch (action.type) {
+    case CUSTOMER_LIST_COUNT_SUCCESS:
+      return { counts: action.payload };
+    case CUSTOMER_LIST_COUNT_RESET:
+      return { counts: [] };
+    default:
+      return state;
+  }
+};
 export const customerDetailReducer = (
   state = { customerDetail: {} },
   action
