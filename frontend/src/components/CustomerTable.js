@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   Icon,
+  Image,
   Table,
   Tbody,
   Td,
@@ -13,6 +14,7 @@ import {
 import React from "react";
 import { IoPencilSharp } from "react-icons/io5";
 import { Link as RouterLink } from "react-router-dom";
+import ImageModal from "./ImageModal";
 
 function CustomerTable({ data, isList }) {
   if (isList) {
@@ -29,11 +31,11 @@ function CustomerTable({ data, isList }) {
           <Thead>
             <Tr>
               <Th>CUSTOMER ID</Th>
-              <Th>EMAIL</Th>
-              <Th>FIRST NAME</Th>
-              <Th>LAST NAME</Th>
-              <Th>PHONE</Th>
               <Th>KYC STATUS</Th>
+              <Th>DOCUMENTS 1</Th>
+              <Th>DOCUMENTS 2</Th>
+              <Th>DOCUMENTS 3</Th>
+              <Th>DOCUMENTS 4</Th>
               <Th></Th>
             </Tr>
           </Thead>
@@ -41,12 +43,19 @@ function CustomerTable({ data, isList }) {
             {data.map((customers) => (
               <Tr key={customers?._id}>
                 <Td>{customers?.user}</Td>
-                <Td>{customers?.email}</Td>
-                <Td>{customers?.firstName ?? "N/A"}</Td>
-                <Td>{customers?.lastName ?? "N/A"}</Td>
-                <Td>{customers?.phone ?? "N/A"}</Td>
                 <Td>{customers?.kycStatus?.toUpperCase()}</Td>
-
+                <Td>
+                  <ImageModal image={data?.image} />
+                </Td>
+                <Td>
+                  <ImageModal image={data?.image} />
+                </Td>
+                <Td>
+                  <ImageModal image={data?.image} />
+                </Td>
+                <Td>
+                  <ImageModal image={data?.image} />
+                </Td>
                 <Td>
                   <Flex justifyContent="flex-end" alignItems="center">
                     <Button
@@ -79,23 +88,30 @@ function CustomerTable({ data, isList }) {
           <Thead>
             <Tr>
               <Th>CUSTOMER ID</Th>
-              <Th>EMAIL</Th>
-              <Th>FIRST NAME</Th>
-              <Th>LAST NAME</Th>
-              <Th>PHONE</Th>
               <Th>KYC STATUS</Th>
+              <Th>DOCUMENTS 1</Th>
+              <Th>DOCUMENTS 2</Th>
+              <Th>DOCUMENTS 3</Th>
+              <Th>DOCUMENTS 4</Th>
               <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
             <Tr key={data?._id}>
               <Td>{data?.user}</Td>
-              <Td>{data?.email}</Td>
-              <Td>{data?.firstName ?? "N/A"}</Td>
-              <Td>{data?.lastName ?? "N/A"}</Td>
-              <Td>{data?.phone ?? "N/A"}</Td>
               <Td>{data?.kycStatus?.toUpperCase()}</Td>
-
+              <Td>
+                <ImageModal image={data?.image} />
+              </Td>
+              <Td>
+                <ImageModal image={data?.image} />
+              </Td>
+              <Td>
+                <ImageModal image={data?.image} />
+              </Td>
+              <Td>
+                <ImageModal image={data?.image} />
+              </Td>
               <Td>
                 <Flex justifyContent="flex-end" alignItems="center">
                   <Button
