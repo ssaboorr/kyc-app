@@ -5,6 +5,8 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import Header from "./components/header/Header";
 import HomeScreen from "./screens/HomeScreen";
+import AddCustomerKycScreen from "./screens/AddCustomerKycScreen";
+import CustomerDetailScreen from "./screens/CustomerDetailScreen";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
 
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
+          <Route path="/add-details/:id" element={<AddCustomerKycScreen />} />
+          <Route path="/customer/:id" element={<CustomerDetailScreen />} />
         </Routes>
       </Flex>
     </div>

@@ -9,10 +9,10 @@ export const getAllCustomers = asyncHandler(async (reg, res) => {
   res.json(customers);
 });
 
-// @desc    Add a customer
+// @desc    Add a customer detail
 // @route   POST /api/customer/
 // @access  private/admin
-export const createCustomer = asyncHandler(async (req, res) => {
+export const addCustomerDetails = asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
@@ -22,23 +22,54 @@ export const createCustomer = asyncHandler(async (req, res) => {
     image3,
     image4,
     gender,
-    address,
     phone,
+    user,
+    address,
+    kycStatus,
   } = req.body;
 
-  const customer = new Customer({
-    firstName,
-    lastName,
-    email,
-    image1,
-    image2,
-    image3,
-    image4,
-    gender,
-    address,
-    phone,
-  });
+  console.log("customer with userId ==>", user);
 
-  const createdCustomer = await customer.save();
-  res.status(201).json(createdCustomer);
+  const customer = await Customer.findOne({ user });
+  if (customer) {
+    customer.firstName = firstName;
+    customer.lastName = lastName;
+    customer.email = email;
+    customer.gender = gender;
+    customer.image1 = image1;
+    customer.image2 = image2;
+    customer.image3 = image3;
+    customer.image4 = image4;
+    customer.phone = phone;
+    customer.address = address;
+    customer.kycStatus = kycStatus;
+
+    const updatedCustomer = await customer.save();
+    res.json(updatedCustomer);
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
+// @desc    Fetch single Customer
+// @route   GET /api/customer/:id
+// @access  public
+export const getCustomerByUserId = asyncHandler(async (req, res) => {
+  try {
+    console.log("User ID:", req.params.id);
+
+    const customer = await Customer.findOne({ user: req.params.id });
+
+    if (!customer) {
+      return res.status(404).json({ message: "Customer details not found" });
+    }
+
+    console.log("Customer details found==>", customer);
+
+    res.json(customer);
+  } catch (error) {
+    console.error("Error fetching customer details:", error);
+    res.status(500).json({ message: "Server error" });
+  }
 });

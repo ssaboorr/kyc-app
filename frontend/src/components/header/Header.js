@@ -22,13 +22,28 @@ import { HiOutlineUser, HiShoppingCart, HiLogin } from "react-icons/hi";
 import { GoSignIn } from "react-icons/go";
 
 import MenuItems from "./MenuItems";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../actions/userActions.js";
 
 const Header = () => {
-  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
 
-  const logoutHandler = () => {};
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-  const handleClick = () => {};
+  const userDetails = useSelector((state) => state.userDetails);
+
+  // const { user } = userDetails;
+
+  // if (user.firstName) {
+  //   userInfo.firstName = user.firstName;
+  // }
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <Flex
@@ -64,11 +79,11 @@ const Header = () => {
       </Flex>
 
       <Box
-        display={{ base: show ? "none" : "none", md: "flex" }}
+        display={{ base: "none", md: "flex" }}
         width={{ base: "full", md: "auto" }}
         alignItems="center"
       >
-        {false ? (
+        {userInfo?.token ? (
           <Flex justifyContent="center" alignItems="center">
             <Menu>
               <MenuButton
@@ -76,22 +91,12 @@ const Header = () => {
                 rightIcon={<IoChevronDown />}
                 _hover={{ textDecoration: "none", opacity: "0.7" }}
               >
-                {/* {userInfo.name} */}
+                {userInfo.email}
               </MenuButton>
               <MenuList url="/login">
-                <MenuItem as={RouterLink} to="/profile">
-                  Profile
-                </MenuItem>
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </MenuList>
             </Menu>
-
-            <MenuItems url="/cart">
-              <Flex alignItems="center" justifyContent="center" m="2">
-                <Icon w="4" h="4" mr="1" as={HiShoppingCart} />
-                Cart
-              </Flex>
-            </MenuItems>
           </Flex>
         ) : (
           <Flex>

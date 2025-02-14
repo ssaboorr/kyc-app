@@ -5,19 +5,19 @@ const customersInfoSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     firstName: {
       type: String,
-      required: true,
+      required: false,
     },
     lastName: {
       type: String,
-      required: true,
+      required: false,
     },
     email: {
       type: String,
-      required: true,
+      required: false,
     },
     image1: {
       type: String,
@@ -40,16 +40,21 @@ const customersInfoSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
+      required: false,
     },
     phone: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
+    },
+    kycStatus: {
+      type: String,
+      required: false,
+      default: "pending",
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 

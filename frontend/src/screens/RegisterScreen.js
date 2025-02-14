@@ -27,7 +27,6 @@ const RegisterScreen = () => {
   let [searchParams] = useSearchParams();
   let redirect = searchParams.get("redirect") || "/";
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,7 +37,7 @@ const RegisterScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      navigate(redirect);
+      navigate("/login");
     }
   }, [navigate, userInfo, redirect]);
 
@@ -47,7 +46,7 @@ const RegisterScreen = () => {
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(email, password));
     }
   };
 
@@ -62,16 +61,6 @@ const RegisterScreen = () => {
         {message && <Message type="error">{message}</Message>}
 
         <form onSubmit={submitHandler}>
-          <FormControl id="name">
-            <FormLabel>Name</FormLabel>
-            <Input
-              type="text"
-              placeholder="Your full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </FormControl>
-
           <Spacer h="3" />
 
           <FormControl id="email">
