@@ -41,13 +41,13 @@ function HomeScreen() {
   }, [userInfo]);
 
   return (
-    <div>
+    <Flex w={"100%"}>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message type="error">{error}</Message>
       ) : customers?.length ? (
-        <>
+        <Flex w="100%" alignItems="flex-start" justifyContent="center" py="5">
           <Box
             overflowX="scroll"
             bgColor="white"
@@ -71,7 +71,7 @@ function HomeScreen() {
               <Tbody>
                 {customers.map((customers) => (
                   <Tr key={customers?._id}>
-                    <Td>{customers?.user}</Td>
+                    <Td>{customers?.user?._id}</Td>
                     <Td>{customers?.email}</Td>
                     <Td>{customers?.firstName ?? "N/A"}</Td>
                     <Td>{customers?.lastName ?? "N/A"}</Td>
@@ -83,17 +83,10 @@ function HomeScreen() {
                         <Button
                           mr="4"
                           as={RouterLink}
-                          to={`/add-details/${customers?.user}`}
+                          to={`/add-details/${customers?.user?._id}`}
                           colorScheme="teal"
                         >
                           <Icon as={IoPencilSharp} color="white" size="sm" />
-                        </Button>
-                        <Button
-                          mr="4"
-                          colorScheme="red"
-                          //   onClick={() => deleteHandler(customer._id)}
-                        >
-                          <Icon as={IoTrashBinSharp} color="white" size="sm" />
                         </Button>
                       </Flex>
                     </Td>
@@ -102,11 +95,11 @@ function HomeScreen() {
               </Tbody>
             </Table>
           </Box>
-        </>
+        </Flex>
       ) : (
         <Text>Login To complete your profile</Text>
       )}
-    </div>
+    </Flex>
   );
 }
 

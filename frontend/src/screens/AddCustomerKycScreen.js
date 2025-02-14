@@ -33,7 +33,7 @@ const AddCustomerKycScreen = () => {
   const customerDetails = useSelector((state) => state.customerDetail);
   const { customerDetail, detailLodaing, detailError } = customerDetails;
 
-  const [firstName, setFirstName] = useState(customerDetail.firstName ?? "");
+  const [firstName, setFirstName] = useState(customerDetail.firstName);
   const [lastName, setLastName] = useState(customerDetail.lastName ?? "");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
@@ -60,8 +60,33 @@ const AddCustomerKycScreen = () => {
     }
   }, [dispatch, navigate, success]);
 
+  useEffect(() => {
+    if (customerDetail) {
+      setFirstName(customerDetail.firstName || "");
+      setLastName(customerDetail.lastName || "");
+      setImage1(customerDetail.image1 || "");
+      setImage2(customerDetail.image2 || "");
+      setImage3(customerDetail.image3 || "");
+      setImage4(customerDetail.image4 || "");
+      setGender(customerDetail.gender || "");
+      setAddress(customerDetail.address || "");
+      setPhone(customerDetail.phone || "");
+      setKycStatus(customerDetail.kycStatus || "");
+      setEmail(
+        id === userInfo?._id
+          ? userInfo.email
+          : customerDetail.email
+          ? customerDetail.email
+          : ""
+      );
+    }
+  }, [customerDetail, id, userInfo]);
+
+  console.log("Customer Details in redux ==>", customerDetail);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("On submittin ==>", kycStatus);
     dispatch(
       addCustomers({
         firstName,
@@ -317,7 +342,7 @@ const AddCustomerKycScreen = () => {
                   <FormLabel>Update Kyc Status</FormLabel>
                   <Input
                     type="text"
-                    placeholder="Enter Gender"
+                    placeholder="Kyc Status"
                     value={kycStatus}
                     onChange={(e) => setKycStatus(e.target.value)}
                   />

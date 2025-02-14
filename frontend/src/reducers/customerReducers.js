@@ -12,6 +12,7 @@ import {
   CUSTOMER_DETAILS_SUCCESS,
   CUSTOMER_LIST_FAIL,
   CUSTOMER_LIST_REQUEST,
+  CUSTOMER_LIST_RESET,
   CUSTOMER_LIST_SUCCESS,
   CUSTOMER_UPDATE_FAIL,
   CUSTOMER_UPDATE_REQUEST,
@@ -27,6 +28,8 @@ export const customerListReducer = (state = { customers: [] }, action) => {
       return { loading: false, customers: action.payload };
     case CUSTOMER_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case CUSTOMER_LIST_RESET:
+      return { customers: [] };
     default:
       return state;
   }
@@ -44,7 +47,7 @@ export const customerDetailReducer = (
     case CUSTOMER_DETAILS_FAIL:
       return { detailLodaing: false, detailError: action.payload };
     case CUSTOMER_DETAILS_RESET:
-      return { customerDetail: { reviews: [] } };
+      return { customerDetail: {} };
     default:
       return state;
   }

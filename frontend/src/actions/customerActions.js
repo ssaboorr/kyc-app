@@ -7,6 +7,7 @@ import {
   CUSTOMER_DETAILS_SUCCESS,
   CUSTOMER_LIST_FAIL,
   CUSTOMER_LIST_REQUEST,
+  CUSTOMER_LIST_RESET,
   CUSTOMER_LIST_SUCCESS,
 } from "../constants/customerConstants";
 import axios from "axios";
@@ -45,6 +46,7 @@ export const addCustomers = (customer) => async (dispatch, getState) => {
 
     const { data } = await axios.post(`/api/customers`, customer, config);
     dispatch({ type: CUSTOMER_CREATE_SUCCESS, payload: data });
+    dispatch({ type: CUSTOMER_LIST_RESET });
   } catch (err) {
     dispatch({
       type: CUSTOMER_CREATE_FAIL,

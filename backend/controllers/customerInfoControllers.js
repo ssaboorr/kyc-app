@@ -2,11 +2,19 @@ import asyncHandler from "express-async-handler";
 import Customer from "../models/customersInfoModels.js";
 
 // @desc    Fetch all users
-// @route   GET /api/users
+// @route   GET /api/customer
 // @access  public
-export const getAllCustomers = asyncHandler(async (reg, res) => {
-  const customers = await Customer.find({});
-  res.json(customers);
+export const getAllCustomers = asyncHandler(async (req, res) => {
+  const customers = await Customer.find().populate({
+    path: "user", // Assuming "user" is a reference to the User model
+    match: { isAdmin: false }, // Only populate users where isAdmin is false
+    select: "name email isAdmin", // Fetch only required fields
+  });
+  const filteredCustomers = customers.filter(
+    (customer) => customer.user !== null
+  );
+
+  res.json(filteredCustomers);
 });
 
 // @desc    Add a customer detail
@@ -28,7 +36,7 @@ export const addCustomerDetails = asyncHandler(async (req, res) => {
     kycStatus,
   } = req.body;
 
-  console.log("customer with userId ==>", user);
+  console.log("customer with userId in backend==>", kycStatus);
 
   const customer = await Customer.findOne({ user });
   if (customer) {

@@ -16,6 +16,7 @@ import {
   Box,
   Button,
   Icon,
+  Spacer,
 } from "@chakra-ui/react";
 import { IoPencilSharp, IoTrashBinSharp, IoAdd } from "react-icons/io5";
 
@@ -34,7 +35,7 @@ function CustomerDetailScreen() {
   }, []);
 
   return (
-    <div>
+    <Flex w={"100%"}>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -43,7 +44,16 @@ function CustomerDetailScreen() {
           <RouterLink to={"/add-details"}>Add Details</RouterLink>
         </Flex>
       ) : (
-        <Flex>
+        <Flex
+          w="100%"
+          alignItems="center"
+          justifyContent="flex-start"
+          py="5"
+          flexDirection={"column"}
+          gap={20}
+        >
+          <Text>Your Details</Text>
+
           <Box
             overflowX="scroll"
             bgColor="white"
@@ -61,17 +71,17 @@ function CustomerDetailScreen() {
                   <Th>LAST NAME</Th>
                   <Th>PHONE</Th>
                   <Th>KYC STATUS</Th>
-                  <Th></Th>
+                  <Th>Edit</Th>
                 </Tr>
               </Thead>
               <Tbody>
                 <Tr key={customerDetail?._id}>
-                  <Td>{customerDetail?.user}</Td>
+                  <Td>{customerDetail?.user?._id}</Td>
                   <Td>{customerDetail?.email}</Td>
                   <Td>{customerDetail?.firstName ?? "N/A"}</Td>
                   <Td>{customerDetail?.lastName ?? "N/A"}</Td>
                   <Td>{customerDetail?.phone ?? "N/A"}</Td>
-                  <Td>{customerDetail?.kycStatus}</Td>
+                  <Td>{customerDetail?.kycStatus?.toUpperCase()}</Td>
 
                   <Td>
                     <Flex justifyContent="flex-end" alignItems="center">
@@ -83,13 +93,6 @@ function CustomerDetailScreen() {
                       >
                         <Icon as={IoPencilSharp} color="white" size="sm" />
                       </Button>
-                      <Button
-                        mr="4"
-                        colorScheme="red"
-                        //   onClick={() => deleteHandler(customer._id)}
-                      >
-                        <Icon as={IoTrashBinSharp} color="white" size="sm" />
-                      </Button>
                     </Flex>
                   </Td>
                 </Tr>
@@ -98,7 +101,7 @@ function CustomerDetailScreen() {
           </Box>
         </Flex>
       )}
-    </div>
+    </Flex>
   );
 }
 
