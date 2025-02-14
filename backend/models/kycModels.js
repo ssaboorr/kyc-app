@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const customersInfoSchema = mongoose.Schema(
+const kycInfoSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -58,6 +58,6 @@ const customersInfoSchema = mongoose.Schema(
   }
 );
 
-const Customer = mongoose.model("CustomerInfo", customersInfoSchema);
+const UserKyc = mongoose.model("UserKyc", kycInfoSchema);
 
-export default Customer;
+export default UserKyc;

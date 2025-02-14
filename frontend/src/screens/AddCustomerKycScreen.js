@@ -16,7 +16,15 @@ import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 
 import axios from "axios";
-import { addCustomers, getCustomerDetails } from "../actions/customerActions";
+import {
+  addCustomers,
+  getCustomerDetails,
+  updateCustomer,
+} from "../actions/customerActions";
+import {
+  CUSTOMER_CREATE_RESET,
+  CUSTOMER_UPDATE_RESET,
+} from "../constants/customerConstants";
 
 const AddCustomerKycScreen = () => {
   const navigate = useNavigate();
@@ -28,37 +36,35 @@ const AddCustomerKycScreen = () => {
   const customerCreate = useSelector((state) => state.customerCreate);
   const { loading, error, success, customer } = customerCreate;
 
+  const customerUpdate = useSelector((state) => state.customerUpdate);
+  const { successUpdate } = customerUpdate;
+
   const [uploading, setUploading] = useState(false);
 
   const customerDetails = useSelector((state) => state.customerDetail);
   const { customerDetail, detailLodaing, detailError } = customerDetails;
 
-  const [firstName, setFirstName] = useState(customerDetail.firstName);
-  const [lastName, setLastName] = useState(customerDetail.lastName ?? "");
+  const [firstName, setFirstName] = useState(customerDetail?.firstName ?? "");
+  const [lastName, setLastName] = useState(customerDetail?.lastName ?? "");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [image3, setImage3] = useState("");
   const [image4, setImage4] = useState("");
-  const [gender, setGender] = useState(customerDetail.gender ?? "");
-  const [address, setAddress] = useState(customerDetail.address ?? "");
-  const [phone, setPhone] = useState(customerDetail.phone ?? "");
-  const [kycStatus, setKycStatus] = useState(customerDetail.kycStatus);
-  const [email, setEmail] = useState(
-    id === userInfo?._id
-      ? userInfo.email
-      : customerDetail.email
-      ? customerDetail.email
-      : ""
-  );
+  const [gender, setGender] = useState(customerDetail?.gender ?? "");
+  const [address, setAddress] = useState(customerDetail?.address ?? "");
+  const [phone, setPhone] = useState(customerDetail?.phone ?? "");
+  const [kycStatus, setKycStatus] = useState(customerDetail?.kycStatus);
+  const [email, setEmail] = useState(customerDetail?.email);
 
   useEffect(() => {
-    if (success) {
-      dispatch({ type: "CUSTOMER_CREATE_RESET" });
+    if (success || successUpdate) {
+      dispatch({ type: CUSTOMER_CREATE_RESET });
+      dispatch({ type: CUSTOMER_UPDATE_RESET });
       navigate("/");
     } else {
       dispatch(getCustomerDetails(id));
     }
-  }, [dispatch, navigate, success]);
+  }, [dispatch, navigate, success, successUpdate]);
 
   useEffect(() => {
     if (customerDetail) {
@@ -86,23 +92,32 @@ const AddCustomerKycScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("On submittin ==>", kycStatus);
-    dispatch(
-      addCustomers({
-        firstName,
-        lastName,
-        email,
-        image1,
-        image2,
-        image3,
-        image4,
-        gender,
-        phone,
-        user: userInfo._id,
-        address,
-        kycStatus,
-      })
-    );
+    console.log("On submittin ==>", customerDetail?._id);
+
+    if (userInfo.role === "admin") {
+      dispatch(
+        updateCustomer(customerDetail?._id, {
+          kycStatus,
+        })
+      );
+    } else {
+      dispatch(
+        addCustomers({
+          firstName,
+          lastName,
+          email: userInfo.email,
+          image1,
+          image2,
+          image3,
+          image4,
+          gender,
+          phone,
+          user: userInfo._id,
+          address,
+          kycStatus,
+        })
+      );
+    }
   };
 
   const uploadFileHandler1 = async (e) => {
@@ -211,7 +226,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="name" isRequired>
               <FormLabel>First Name</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter First name"
                 value={firstName}
@@ -224,7 +239,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="name" isRequired>
               <FormLabel>Last Name</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter Last name"
                 value={lastName}
@@ -236,7 +251,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="email" isRequired>
               <FormLabel>Email</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="email"
                 placeholder="Enter email"
                 value={email}
@@ -249,7 +264,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="image">
               <FormLabel>Image</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter image url"
                 value={image1}
@@ -262,7 +277,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="image">
               <FormLabel>Image</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter image url"
                 value={image2}
@@ -274,7 +289,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="image">
               <FormLabel>Image</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter image url"
                 value={image3}
@@ -286,7 +301,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="image">
               <FormLabel>Image</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter image url"
                 value={image4}
@@ -300,7 +315,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="address" isRequired>
               <FormLabel>Address</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter Address"
                 value={address}
@@ -313,7 +328,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="phone" isRequired>
               <FormLabel>Phone</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter phone"
                 value={phone}
@@ -327,7 +342,7 @@ const AddCustomerKycScreen = () => {
             <FormControl id="brand" isRequired>
               <FormLabel>Gender</FormLabel>
               <Input
-                readOnly={userInfo?.isAdmin}
+                readOnly={userInfo?.role === "admin"}
                 type="text"
                 placeholder="Enter Gender"
                 value={gender}
@@ -336,7 +351,7 @@ const AddCustomerKycScreen = () => {
             </FormControl>
             <Spacer h="3" />
 
-            {userInfo?.isAdmin && (
+            {userInfo?.role === "admin" && (
               <>
                 <FormControl id="brand" isRequired>
                   <FormLabel>Update Kyc Status</FormLabel>

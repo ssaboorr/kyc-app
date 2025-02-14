@@ -20,12 +20,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { IoPencilSharp, IoTrashBinSharp, IoAdd } from "react-icons/io5";
-import { listCustomers } from "../actions/customerActions";
+import { getCustomerDetails, listCustomers } from "../actions/customerActions";
 
 function HomeScreen() {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  const customerDetails = useSelector((state) => state.customerDetail);
+  const { customerDetail } = customerDetails;
+
+  console.log("Customer details in home", customerDetail);
 
   const customerList = useSelector((state) => state.customerList);
   const { loading, customers, error } = customerList;
@@ -33,10 +37,10 @@ function HomeScreen() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userInfo?.isAdmin) {
+    if (userInfo?.role === "admin") {
       dispatch(listCustomers());
     } else if (userInfo?.token) {
-      navigate(`/customer/${userInfo._id}`);
+      dispatch(getCustomerDetails(userInfo?._id));
     }
   }, [userInfo]);
 
@@ -71,7 +75,7 @@ function HomeScreen() {
               <Tbody>
                 {customers.map((customers) => (
                   <Tr key={customers?._id}>
-                    <Td>{customers?.user?._id}</Td>
+                    <Td>{customers?.user}</Td>
                     <Td>{customers?.email}</Td>
                     <Td>{customers?.firstName ?? "N/A"}</Td>
                     <Td>{customers?.lastName ?? "N/A"}</Td>
@@ -83,7 +87,7 @@ function HomeScreen() {
                         <Button
                           mr="4"
                           as={RouterLink}
-                          to={`/add-details/${customers?.user?._id}`}
+                          to={`/add-details/${customers?.user}`}
                           colorScheme="teal"
                         >
                           <Icon as={IoPencilSharp} color="white" size="sm" />
@@ -96,6 +100,17 @@ function HomeScreen() {
             </Table>
           </Box>
         </Flex>
+      ) : customerDetail?._id ? (
+        <Text>Form pending</Text>
+      ) : userInfo?.token ? (
+        <RouterLink
+          as={RouterLink}
+          to={`/add-details/${userInfo._id}`}
+          color="gray.800"
+          _hover={{ color: "gray.500", textDecor: "none" }}
+        >
+          Add your details
+        </RouterLink>
       ) : (
         <Text>Login To complete your profile</Text>
       )}

@@ -76,7 +76,7 @@ function CustomerDetailScreen() {
               </Thead>
               <Tbody>
                 <Tr key={customerDetail?._id}>
-                  <Td>{customerDetail?.user?._id}</Td>
+                  <Td>{customerDetail?.user}</Td>
                   <Td>{customerDetail?.email}</Td>
                   <Td>{customerDetail?.firstName ?? "N/A"}</Td>
                   <Td>{customerDetail?.lastName ?? "N/A"}</Td>

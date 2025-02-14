@@ -6,18 +6,15 @@ import {
   Link,
   Box,
   Icon,
-  Text,
-  Input,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   Button,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 import { IoChevronDown } from "react-icons/io5";
 
-import { HiOutlineUser, HiShoppingCart, HiLogin } from "react-icons/hi";
+import { HiLogin } from "react-icons/hi";
 
 import { GoSignIn } from "react-icons/go";
 
@@ -31,14 +28,6 @@ const Header = () => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const userDetails = useSelector((state) => state.userDetails);
-
-  // const { user } = userDetails;
-
-  // if (user.firstName) {
-  //   userInfo.firstName = user.firstName;
-  // }
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -100,12 +89,6 @@ const Header = () => {
           </Flex>
         ) : (
           <Flex>
-            <MenuItems url="/register">
-              <Flex alignItems="center" justifyContent="center" m="2">
-                <Icon w="4" h="4" mr="1" as={GoSignIn} />
-                SignIn
-              </Flex>
-            </MenuItems>
             <MenuItems url="/login">
               <Flex alignItems="center" justifyContent="center" m="2">
                 <Icon w="4" h="4" mr="1" as={HiLogin} />

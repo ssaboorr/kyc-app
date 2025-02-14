@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import connectDb from "./config/db.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 import userRoutes from "./routes/userRoutes.js";
-import customersRoutes from "./routes/customerRoutes.js";
+import kycRoutes from "./routes/kycRoutes.js";
 import uploadRoute from "./routes/uploadsRoutes.js";
 
 dotenv.config();
@@ -14,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 app.use("/api/users", userRoutes);
-app.use("/api/customers", customersRoutes);
+app.use("/api/kyc", kycRoutes);
 app.use("/api/uploads", uploadRoute);
 
 app.get("/", (req, res) => {

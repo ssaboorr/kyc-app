@@ -87,7 +87,7 @@ export const customerUpdateReducer = (state = { customer: {} }, action) => {
     case CUSTOMER_UPDATE_REQUEST:
       return { loading: true };
     case CUSTOMER_UPDATE_SUCCESS:
-      return { loading: false, success: true, customer: action.payload };
+      return { loading: false, successUpdate: true, customer: action.payload };
     case CUSTOMER_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     case CUSTOMER_UPDATE_RESET:

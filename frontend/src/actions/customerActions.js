@@ -9,14 +9,26 @@ import {
   CUSTOMER_LIST_REQUEST,
   CUSTOMER_LIST_RESET,
   CUSTOMER_LIST_SUCCESS,
+  CUSTOMER_UPDATE_REQUEST,
+  CUSTOMER_UPDATE_SUCCESS,
+  CUSTOMER_UPDATE_FAIL,
 } from "../constants/customerConstants";
 import axios from "axios";
 
-export const listCustomers = () => async (dispatch) => {
+export const listCustomers = () => async (dispatch, getState) => {
   try {
     dispatch({ type: CUSTOMER_LIST_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
-    const { data } = await axios.get("/api/customers");
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/kyc", config);
 
     dispatch({ type: CUSTOMER_LIST_SUCCESS, payload: data });
   } catch (err) {
@@ -44,7 +56,7 @@ export const addCustomers = (customer) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/customers`, customer, config);
+    const { data } = await axios.post(`/api/kyc/`, customer, config);
     dispatch({ type: CUSTOMER_CREATE_SUCCESS, payload: data });
     dispatch({ type: CUSTOMER_LIST_RESET });
   } catch (err) {
@@ -60,6 +72,7 @@ export const addCustomers = (customer) => async (dispatch, getState) => {
 
 export const getCustomerDetails = (id) => async (dispatch, getState) => {
   try {
+    console.log("Customer id in action ==>", id);
     dispatch({ type: CUSTOMER_DETAILS_REQUEST });
     const {
       userLogin: { userInfo },
@@ -71,13 +84,37 @@ export const getCustomerDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    console.log("get customer details called ==>", id);
-
-    const { data } = await axios.get(`/api/customers/${id}`, config);
+    const { data } = await axios.get(`/api/kyc/${id}`, config);
     dispatch({ type: CUSTOMER_DETAILS_SUCCESS, payload: data });
   } catch (err) {
     dispatch({
       type: CUSTOMER_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const updateCustomer = (id, kycData) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: CUSTOMER_UPDATE_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/kyc/${id}`, kycData, config);
+    dispatch({ type: CUSTOMER_UPDATE_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: CUSTOMER_UPDATE_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message

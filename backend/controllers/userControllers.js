@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModels.js";
 import generateToken from "../utils/generateToke.js";
-import Customer from "../models/customersInfoModels.js";
+import UserKyc from "../models/kycModels.js";
 
 // @desc    Auth user & get token
 // @route   GET /api/users/login
@@ -17,6 +17,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
@@ -29,7 +30,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  public
 const registerUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -38,15 +39,16 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  const user = await User.create({ email, password });
-  const customer = await Customer.create({ email, user: user._id });
+  const user = await User.create({ email, password, role });
 
   if (user) {
     // 201 - created successfully
+
     res.status(201).json({
       _id: user._id,
       email: user.email,
       isAdmin: user.idAdmin,
+      role: user.role,
       token: generateToken(user._id),
     });
   } else {
