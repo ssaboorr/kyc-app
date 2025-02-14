@@ -10,6 +10,7 @@ import {
   Input,
   Spacer,
   Link,
+  Select,
 } from "@chakra-ui/react";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -341,13 +342,20 @@ const AddCustomerKycScreen = () => {
 
             <FormControl id="brand" isRequired>
               <FormLabel>Gender</FormLabel>
-              <Input
-                readOnly={userInfo?.role === "admin"}
-                type="text"
-                placeholder="Enter Gender"
+              <Select
+                color="gray.800"
                 value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              />
+                width="30"
+                onChange={(e) => {
+                  setGender(e.target.value);
+                }}
+              >
+                {["Male", "Female"].map((i) => (
+                  <option key={i} value={i}>
+                    {i}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <Spacer h="3" />
 
@@ -355,12 +363,20 @@ const AddCustomerKycScreen = () => {
               <>
                 <FormControl id="brand" isRequired>
                   <FormLabel>Update Kyc Status</FormLabel>
-                  <Input
-                    type="text"
-                    placeholder="Kyc Status"
+                  <Select
+                    color="gray.800"
                     value={kycStatus}
-                    onChange={(e) => setKycStatus(e.target.value)}
-                  />
+                    width="30"
+                    onChange={(e) => {
+                      setKycStatus(e.target.value);
+                    }}
+                  >
+                    {["Approve", "Reject", "Pending"].map((i) => (
+                      <option key={i} value={i}>
+                        {i}
+                      </option>
+                    ))}
+                  </Select>
                 </FormControl>
               </>
             )}

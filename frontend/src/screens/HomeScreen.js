@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { IoPencilSharp, IoTrashBinSharp, IoAdd } from "react-icons/io5";
 import { getCustomerDetails, listCustomers } from "../actions/customerActions";
+import CustomerTable from "../components/CustomerTable";
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -52,67 +53,34 @@ function HomeScreen() {
         <Message type="error">{error}</Message>
       ) : customers?.length ? (
         <Flex w="100%" alignItems="flex-start" justifyContent="center" py="5">
-          <Box
-            overflowX="scroll"
-            bgColor="white"
-            rounded="lg"
-            shadow="lg"
-            px="5"
-            py="5"
-          >
-            <Table variant="striped" colorScheme="gray" size="lg">
-              <Thead>
-                <Tr>
-                  <Th>CUSTOMER ID</Th>
-                  <Th>EMAIL</Th>
-                  <Th>FIRST NAME</Th>
-                  <Th>LAST NAME</Th>
-                  <Th>PHONE</Th>
-                  <Th>KYC STATUS</Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {customers.map((customers) => (
-                  <Tr key={customers?._id}>
-                    <Td>{customers?.user}</Td>
-                    <Td>{customers?.email}</Td>
-                    <Td>{customers?.firstName ?? "N/A"}</Td>
-                    <Td>{customers?.lastName ?? "N/A"}</Td>
-                    <Td>{customers?.phone ?? "N/A"}</Td>
-                    <Td>{customers?.kycStatus?.toUpperCase()}</Td>
-
-                    <Td>
-                      <Flex justifyContent="flex-end" alignItems="center">
-                        <Button
-                          mr="4"
-                          as={RouterLink}
-                          to={`/add-details/${customers?.user}`}
-                          colorScheme="teal"
-                        >
-                          <Icon as={IoPencilSharp} color="white" size="sm" />
-                        </Button>
-                      </Flex>
-                    </Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </Box>
+          <CustomerTable data={customers} isList={true} />
         </Flex>
       ) : customerDetail?._id ? (
-        <Text>Form pending</Text>
-      ) : userInfo?.token ? (
-        <RouterLink
-          as={RouterLink}
-          to={`/add-details/${userInfo._id}`}
-          color="gray.800"
-          _hover={{ color: "gray.500", textDecor: "none" }}
+        <Flex
+          w="100%"
+          alignItems="center"
+          justifyContent="flex-start"
+          py="5"
+          flexDirection={"column"}
+          gap={10}
         >
-          Add your details
-        </RouterLink>
+          <Heading>Your Details</Heading>
+          <CustomerTable data={customerDetail} isList={false} />
+        </Flex>
+      ) : userInfo?.token ? (
+        <Flex w="100%" alignItems="flex-start" justifyContent="center" py="5">
+          <RouterLink
+            as={RouterLink}
+            to={`/add-details/${userInfo._id}`}
+            color="blue"
+          >
+            Click here to Add your Details
+          </RouterLink>
+        </Flex>
       ) : (
-        <Text>Login To complete your profile</Text>
+        <Flex w="100%" alignItems="flex-start" justifyContent="center" py="5">
+          <Text>Login To complete your profile</Text>
+        </Flex>
       )}
     </Flex>
   );
