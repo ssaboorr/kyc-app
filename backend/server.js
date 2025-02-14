@@ -17,6 +17,21 @@ app.use("/api/users", userRoutes);
 app.use("/api/kyc", kycRoutes);
 app.use("/api/uploads", uploadRoute);
 
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "fontend", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("api is running");
+  });
+}
+
 app.get("/", (req, res) => {
   res.send("api is running");
 });
