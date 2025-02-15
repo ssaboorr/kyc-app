@@ -4,7 +4,7 @@ import User from "../models/userModels.js";
 import mongoose from "mongoose";
 
 // @desc    Fetch all users
-// @route   GET /api/customer
+// @route   GET /api/kyc
 // @access  public
 export const getAllUserKyc = asyncHandler(async (req, res) => {
   const userKycList = await UserKyc.find({});
@@ -31,7 +31,7 @@ export const getAllUserKyc = asyncHandler(async (req, res) => {
 });
 
 // @desc    Add a customer detail
-// @route   POST /api/customer/
+// @route   POST /api/kyc
 // @access  private/admin
 export const addUserKyc = asyncHandler(async (req, res) => {
   const userKyc = new UserKyc(req.body);
@@ -40,7 +40,7 @@ export const addUserKyc = asyncHandler(async (req, res) => {
 });
 
 // @desc    Fetch single Customer
-// @route   GET /api/customer/:id
+// @route   GET /api/kyc/:id
 // @access  public
 export const getUserKycbyId = asyncHandler(async (req, res) => {
   try {
