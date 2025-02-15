@@ -79,7 +79,7 @@ const AddCustomerKycScreen = () => {
       setGender(customerDetail.gender || "");
       setAddress(customerDetail.address || "");
       setPhone(customerDetail.phone || "");
-      setKycStatus(customerDetail.kycStatus || "");
+      setKycStatus(customerDetail.kycStatus || "Pending");
       setEmail(
         id === userInfo?._id
           ? userInfo.email
