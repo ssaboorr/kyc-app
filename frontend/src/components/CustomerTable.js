@@ -121,7 +121,10 @@ function CustomerTable({ data, isList }) {
                   <Button
                     mr="4"
                     as={RouterLink}
-                    to={`/add-details/${data?.user}`}
+                    to={{
+                      pathname: `/add-details/${data?.user}`,
+                      state: { formType: "edit" },
+                    }}
                     colorScheme="teal"
                   >
                     <Icon as={IoPencilSharp} color="white" size="sm" />

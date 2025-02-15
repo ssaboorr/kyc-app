@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
+import {
+  Link as RouterLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -30,6 +35,8 @@ import {
 const AddCustomerKycScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const formType = location.state?.formType;
   const { id } = useParams();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -95,12 +102,28 @@ const AddCustomerKycScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("On submittin ==>", customerDetail?._id);
+    console.log("On submittin ==>", formType);
 
     if (userInfo.role === "admin") {
       dispatch(
         updateCustomer(customerDetail?._id, {
           kycStatus,
+        })
+      );
+    } else if (customerDetail?._id) {
+      dispatch(
+        updateCustomer(customerDetail?._id, {
+          firstName,
+          lastName,
+          image1,
+          image2,
+          image3,
+          image4,
+          gender,
+          phone,
+          address,
+          kycStatus,
+          email,
         })
       );
     } else {
