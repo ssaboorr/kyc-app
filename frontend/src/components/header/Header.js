@@ -86,6 +86,18 @@ const Header = () => {
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
               </MenuList>
             </Menu>
+            {userInfo.role === "admin" && (
+              <Heading
+                as="h1"
+                color="red"
+                fontWeight="bold"
+                size="md"
+                letterSpacing="md"
+                px="4"
+              >
+                Admin
+              </Heading>
+            )}
           </Flex>
         ) : (
           <Flex>

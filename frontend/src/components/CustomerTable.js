@@ -32,10 +32,10 @@ function CustomerTable({ data, isList }) {
             <Tr>
               <Th>CUSTOMER ID</Th>
               <Th>KYC STATUS</Th>
-              <Th>DOCUMENTS 1</Th>
-              <Th>DOCUMENTS 2</Th>
-              <Th>DOCUMENTS 3</Th>
-              <Th>DOCUMENTS 4</Th>
+              <Th>DOCUMENT 1</Th>
+              <Th>DOCUMENT 2</Th>
+              <Th>DOCUMENT 3</Th>
+              <Th>DOCUMENT 4</Th>
               <Th></Th>
             </Tr>
           </Thead>
@@ -45,16 +45,16 @@ function CustomerTable({ data, isList }) {
                 <Td>{customers?.user}</Td>
                 <Td>{customers?.kycStatus?.toUpperCase()}</Td>
                 <Td>
-                  <ImageModal image={data?.image} />
+                  <ImageModal image={customers?.image1} />
                 </Td>
                 <Td>
-                  <ImageModal image={data?.image} />
+                  <ImageModal image={customers?.image2} />
                 </Td>
                 <Td>
-                  <ImageModal image={data?.image} />
+                  <ImageModal image={customers?.image3} />
                 </Td>
                 <Td>
-                  <ImageModal image={data?.image} />
+                  <ImageModal image={customers?.image4} />
                 </Td>
                 <Td>
                   <Flex justifyContent="flex-end" alignItems="center">
@@ -89,10 +89,10 @@ function CustomerTable({ data, isList }) {
             <Tr>
               <Th>CUSTOMER ID</Th>
               <Th>KYC STATUS</Th>
-              <Th>DOCUMENTS 1</Th>
-              <Th>DOCUMENTS 2</Th>
-              <Th>DOCUMENTS 3</Th>
-              <Th>DOCUMENTS 4</Th>
+              <Th>DOCUMENT 1</Th>
+              <Th>DOCUMENT 2</Th>
+              <Th>DOCUMENT 3</Th>
+              <Th>DOCUMENT 4</Th>
               <Th></Th>
             </Tr>
           </Thead>
@@ -101,16 +101,16 @@ function CustomerTable({ data, isList }) {
               <Td>{data?.user}</Td>
               <Td>{data?.kycStatus?.toUpperCase()}</Td>
               <Td>
-                <ImageModal image={data?.image} />
+                <ImageModal image={data?.image1} />
               </Td>
               <Td>
-                <ImageModal image={data?.image} />
+                <ImageModal image={data?.image2} />
               </Td>
               <Td>
-                <ImageModal image={data?.image} />
+                <ImageModal image={data?.image3} />
               </Td>
               <Td>
-                <ImageModal image={data?.image} />
+                <ImageModal image={data?.image4} />
               </Td>
               <Td>
                 <Flex justifyContent="flex-end" alignItems="center">

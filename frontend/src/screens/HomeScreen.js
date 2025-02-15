@@ -4,22 +4,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import {
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box,
-  Input,
-  Text,
-} from "@chakra-ui/react";
-import { IoPencilSharp, IoTrashBinSharp, IoAdd } from "react-icons/io5";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import { getCustomerDetails, listCustomers } from "../actions/customerActions";
 import CustomerTable from "../components/CustomerTable";
 import KpiCards from "../components/KpiCards";

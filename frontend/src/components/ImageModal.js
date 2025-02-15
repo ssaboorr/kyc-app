@@ -2,24 +2,16 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
   Button,
-  Grid,
-  Flex,
   Image,
-  Divider,
-  Heading,
-  Text,
 } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function ImageModal({ image }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  console.log("Image path ==> , ", image);
   return (
     <>
       <Button bgColor="gray.800" colorScheme="teal" onClick={() => onOpen()}>
@@ -29,7 +21,11 @@ function ImageModal({ image }) {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
             <Image src={image} alt={image} minH="250px" objcetFit="cover" />
           </ModalBody>
         </ModalContent>
