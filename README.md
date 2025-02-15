@@ -26,9 +26,9 @@
 email : admin@gmail.com
 password : 123456
 
-# Live Demo : http://206.189.133.164/
+## Live Demo : http://206.189.133.164/
 
-## Assumtions
+## Assumptions
 
     File Storage Location:
 
