@@ -50,7 +50,7 @@ const kycInfoSchema = mongoose.Schema(
     kycStatus: {
       type: String,
       required: false,
-      default: "pending",
+      default: "Pending",
     },
   },
   {

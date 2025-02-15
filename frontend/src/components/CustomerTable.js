@@ -31,6 +31,7 @@ function CustomerTable({ data, isList }) {
           <Thead>
             <Tr>
               <Th>CUSTOMER ID</Th>
+              <Th>EMAIL</Th>
               <Th>KYC STATUS</Th>
               <Th>DOCUMENT 1</Th>
               <Th>DOCUMENT 2</Th>
@@ -43,6 +44,7 @@ function CustomerTable({ data, isList }) {
             {data.map((customers) => (
               <Tr key={customers?._id}>
                 <Td>{customers?.user}</Td>
+                <Td>{customers?.email}</Td>
                 <Td>{customers?.kycStatus?.toUpperCase()}</Td>
                 <Td>
                   <ImageModal image={customers?.image1} />
@@ -88,6 +90,7 @@ function CustomerTable({ data, isList }) {
           <Thead>
             <Tr>
               <Th>CUSTOMER ID</Th>
+              <Th>EMAIL</Th>
               <Th>KYC STATUS</Th>
               <Th>DOCUMENT 1</Th>
               <Th>DOCUMENT 2</Th>
@@ -99,6 +102,7 @@ function CustomerTable({ data, isList }) {
           <Tbody>
             <Tr key={data?._id}>
               <Td>{data?.user}</Td>
+              <Td>{data?.email}</Td>
               <Td>{data?.kycStatus?.toUpperCase()}</Td>
               <Td>
                 <ImageModal image={data?.image1} />

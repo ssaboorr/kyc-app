@@ -54,7 +54,9 @@ const AddCustomerKycScreen = () => {
   const [gender, setGender] = useState(customerDetail?.gender ?? "");
   const [address, setAddress] = useState(customerDetail?.address ?? "");
   const [phone, setPhone] = useState(customerDetail?.phone ?? "");
-  const [kycStatus, setKycStatus] = useState(customerDetail?.kycStatus);
+  const [kycStatus, setKycStatus] = useState(
+    customerDetail?.kycStatus ?? "Pending"
+  );
   const [email, setEmail] = useState(customerDetail?.email);
   const [showUserFoem, setShowUserForm] = useState(true);
 
