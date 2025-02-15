@@ -56,7 +56,7 @@ const AddCustomerKycScreen = () => {
   const [phone, setPhone] = useState(customerDetail?.phone ?? "");
   const [kycStatus, setKycStatus] = useState(customerDetail?.kycStatus);
   const [email, setEmail] = useState(customerDetail?.email);
-  const [showUserFoem, setShowUserForm] = useState(false);
+  const [showUserFoem, setShowUserForm] = useState(true);
 
   useEffect(() => {
     if (success || successUpdate) {
